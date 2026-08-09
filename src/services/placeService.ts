@@ -158,7 +158,8 @@ export const uploadImageService = async (file: File): Promise<string> => {
   if (isFirebaseConfigured && storage) {
     try {
       const storageRef = ref(storage, `places/${Date.now()}_${fileToUpload.name}`);
-      const snapshot = await uploadBytes(storageRef, fileToUpload);
+      const metadata = { cacheControl: 'public, max-age=604800, immutable' };
+      const snapshot = await uploadBytes(storageRef, fileToUpload, metadata);
       return await getDownloadURL(snapshot.ref);
     } catch (err) {
       console.warn('Firebase Storage upload failed, using base64 fallback:', err);
