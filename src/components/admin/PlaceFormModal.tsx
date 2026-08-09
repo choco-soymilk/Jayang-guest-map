@@ -32,6 +32,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
   const [hoverRating, setHoverRating] = useState<number>(0);
 
   const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadInfo, setUploadInfo] = useState<string>('');
   const [saving, setSaving] = useState<boolean>(false);
 
   useEffect(() => {
@@ -72,12 +73,21 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 원본 20 MB 초과 시 거부
+    if (file.size > 20 * 1024 * 1024) {
+      setUploadInfo('❌ 파일이 너무 큽니다 (최대 20 MB)');
+      return;
+    }
+
     setUploading(true);
+    setUploadInfo('압축 중...');
     try {
       const url = await uploadImageService(file);
       setImageUrl(url);
+      setUploadInfo('');
     } catch (err) {
       console.error('Image upload failed:', err);
+      setUploadInfo('❌ 업로드 실패. 다시 시도해주세요.');
     } finally {
       setUploading(false);
     }
@@ -329,6 +339,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
           {/* Image Upload / Preview */}
           <div className="space-y-2">
             <label className="font-semibold text-slate-300 block">Representative Image</label>
+            <p className="text-[10px] text-slate-500">자동 압축: 최대 1200px / 0.5 MB 이하</p>
             <div className="flex items-center gap-3">
               {imageUrl && (
                 <img
@@ -348,6 +359,11 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
                 />
               </label>
             </div>
+            {uploadInfo && (
+              <p className={`text-[10px] ${uploadInfo.startsWith('❌') ? 'text-rose-400' : 'text-amber-400'}`}>
+                {uploadInfo}
+              </p>
+            )}
           </div>
 
           {/* Actions */}

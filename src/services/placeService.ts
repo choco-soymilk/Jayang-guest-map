@@ -1,3 +1,4 @@
+import { compressImage } from '../utils/imageCompressor';
 import { 
   collection, 
   getDocs, 
@@ -141,19 +142,32 @@ export const deletePlaceService = async (id: string): Promise<void> => {
 // IMAGE UPLOAD
 // ─────────────────────────────────────────────
 export const uploadImageService = async (file: File): Promise<string> => {
+  // ── 압축 먼저 (최대 1200px / 0.5 MB) ──
+  let fileToUpload: File;
+  try {
+    fileToUpload = await compressImage(file);
+    console.info(
+      `이미지 압축 완료: ${(file.size / 1024).toFixed(0)} KB → ${(fileToUpload.size / 1024).toFixed(0)} KB`
+    );
+  } catch (err) {
+    console.warn('이미지 압축 실패, 원본 사용:', err);
+    fileToUpload = file;
+  }
+
   if (isFirebaseConfigured && storage) {
     try {
-      const storageRef = ref(storage, `places/${Date.now()}_${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
+      const storageRef = ref(storage, `places/${Date.now()}_${fileToUpload.name}`);
+      const snapshot = await uploadBytes(storageRef, fileToUpload);
       return await getDownloadURL(snapshot.ref);
     } catch (err) {
       console.warn('Firebase Storage upload failed, using base64 fallback:', err);
     }
   }
 
+  // Firebase 미설정 시 base64 fallback (압축된 파일 사용)
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result as string);
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(fileToUpload);
   });
 };
