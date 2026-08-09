@@ -5,7 +5,6 @@ import { CategoryFilter } from '../components/CategoryFilter';
 import { MapView } from '../components/MapView';
 import { PlaceBottomSheet } from '../components/PlaceBottomSheet';
 import { PlaceDetailModal } from '../components/PlaceDetailModal';
-import { QRCodeModal } from '../components/QRCodeModal';
 import { fetchPlaces } from '../services/placeService';
 import { subscribeAuthState } from '../services/authService';
 
@@ -28,7 +27,6 @@ export const GuestPage: React.FC<GuestPageProps> = ({ onOpenAdminPage }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [detailModalPlace, setDetailModalPlace] = useState<Place | null>(null);
-  const [isQRCodeOpen, setIsQRCodeOpen] = useState<boolean>(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
   const [isBottomSheetExpanded, setIsBottomSheetExpanded] = useState<boolean>(true);
   const [panTrigger, setPanTrigger] = useState<number>(0);
@@ -82,7 +80,6 @@ export const GuestPage: React.FC<GuestPageProps> = ({ onOpenAdminPage }) => {
         onLanguageChange={setCurrentLang}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onOpenQRCode={() => setIsQRCodeOpen(true)}
         onOpenAdmin={onOpenAdminPage}
         isAdminLoggedIn={isAdminLoggedIn}
       />
@@ -128,12 +125,6 @@ export const GuestPage: React.FC<GuestPageProps> = ({ onOpenAdminPage }) => {
         currentLang={currentLang}
       />
 
-      {/* Reception QR Scan Modal */}
-      <QRCodeModal
-        isOpen={isQRCodeOpen}
-        onClose={() => setIsQRCodeOpen(false)}
-        currentLang={currentLang}
-      />
     </div>
   );
 };

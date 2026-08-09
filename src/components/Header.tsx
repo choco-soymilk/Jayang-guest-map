@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { Language } from '../types/place';
 import { TRANSLATIONS } from '../i18n/translations';
-import { MapPin, Search, QrCode, Globe, Shield, ChevronDown } from 'lucide-react';
+import { MapPin, Search, Globe, Shield, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   currentLang: Language;
   onLanguageChange: (lang: Language) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  onOpenQRCode: () => void;
   onOpenAdmin: () => void;
   isAdminLoggedIn: boolean;
 }
@@ -25,7 +24,6 @@ export const Header: React.FC<HeaderProps> = ({
   onLanguageChange,
   searchQuery,
   onSearchChange,
-  onOpenQRCode,
   onOpenAdmin,
   isAdminLoggedIn,
 }) => {
@@ -91,17 +89,6 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* QR Code Button */}
-          <button
-            type="button"
-            onClick={onOpenQRCode}
-            className="p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md active:scale-95 shrink-0"
-            title={t.qr_code}
-          >
-            <QrCode className="w-4 h-4 text-amber-400" />
-            <span className="hidden md:inline">{t.qr_code}</span>
-          </button>
-
           {/* Language Switcher */}
           <div className="relative shrink-0" ref={langMenuRef}>
             <button
