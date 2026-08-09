@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { loginAdmin } from '../../services/authService';
-import { Shield, Lock, Mail, AlertCircle, Sparkles } from 'lucide-react';
+import { Shield, Lock, Mail, AlertCircle } from 'lucide-react';
 
 interface AdminLoginFormProps {
   onLoginSuccess: () => void;
@@ -8,8 +8,8 @@ interface AdminLoginFormProps {
 }
 
 export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onLoginSuccess, onClose }) => {
-  const [email, setEmail] = useState<string>('admin@hotel.com');
-  const [password, setPassword] = useState<string>('admin1234');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -51,14 +51,7 @@ export const AdminLoginForm: React.FC<AdminLoginFormProps> = ({ onLoginSuccess, 
           </p>
         </div>
 
-        {/* Demo Credentials Alert Banner */}
-        <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-2.5 text-xs text-amber-200">
-          <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-          <div>
-            <span className="font-bold block text-amber-300">Demo Login Pre-filled</span>
-            <span className="font-mono text-[11px] text-amber-100/90">Email: admin@hotel.com / Pass: admin1234</span>
-          </div>
-        </div>
+
 
         {error && (
           <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">

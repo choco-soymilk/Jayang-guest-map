@@ -10,7 +10,6 @@ import {
   Utensils, 
   Check, 
   Share2, 
-  Building2,
   ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -107,20 +106,12 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
           </div>
 
           {/* Key Quick Info Cards */}
-          <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="text-xs">
             <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5">
               <Clock className="w-4 h-4 text-sky-400 shrink-0" />
               <div>
                 <span className="text-slate-400 block text-[10px]">{t.opening_hours}</span>
                 <span className="font-semibold text-slate-200">{place.opening_hours || '11:00 AM - 10:00 PM'}</span>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5">
-              <Building2 className="w-4 h-4 text-rose-400 shrink-0" />
-              <div>
-                <span className="text-slate-400 block text-[10px]">{t.hotel_distance}</span>
-                <span className="font-semibold text-slate-200">{place.hotel_distance || '5 min walk'}</span>
               </div>
             </div>
           </div>

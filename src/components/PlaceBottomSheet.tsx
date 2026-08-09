@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Place, Language } from '../types/place';
 import { TRANSLATIONS } from '../i18n/translations';
-import { ChevronUp, ChevronDown, Navigation, Clock } from 'lucide-react';
+import { ChevronUp, ChevronDown, Navigation } from 'lucide-react';
 
 interface PlaceBottomSheetProps {
   places: Place[];
@@ -115,11 +115,6 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
                       </span>
                     )}
 
-                    {/* Distance Badge */}
-                    <span className="absolute bottom-2 left-2 text-[11px] font-semibold text-slate-200 flex items-center gap-1 drop-shadow-md">
-                      <Clock className="w-3 h-3 text-sky-400" />
-                      {place.hotel_distance || '5 min walk'}
-                    </span>
                   </div>
 
                   {/* Title & Description */}
