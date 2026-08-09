@@ -19,6 +19,7 @@ export interface Place {
   rating?: number;
   hotel_distance?: string;
   is_featured?: boolean;
+  closed_days?: string[];
 }
 
 export interface AdminUser {

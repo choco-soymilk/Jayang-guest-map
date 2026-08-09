@@ -59,6 +59,7 @@ const docToPlace = (id: string, data: Record<string, any>): Place => ({
   rating: data.rating || 4.8,
   hotel_distance: data.hotel_distance || '5 min walk',
   is_featured: data.is_featured ?? false,
+  closed_days: data.closed_days || [],
 });
 
 // ─────────────────────────────────────────────

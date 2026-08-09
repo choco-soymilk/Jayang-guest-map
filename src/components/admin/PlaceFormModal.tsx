@@ -26,7 +26,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
   const [menus, setMenus] = useState<string[]>(['']);
   const [imageUrl, setImageUrl] = useState<string>('');
   const [openingHours, setOpeningHours] = useState<string>('11:00 AM - 10:00 PM');
-  const [hotelDistance, setHotelDistance] = useState<string>('5 min walk');
+  const [closedDays, setClosedDays] = useState<string[]>([]);
   const [isFeatured, setIsFeatured] = useState<boolean>(true);
   const [rating, setRating] = useState<number>(4.5);
   const [hoverRating, setHoverRating] = useState<number>(0);
@@ -47,7 +47,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
       setMenus(editingPlace.recommended_menus.length > 0 ? editingPlace.recommended_menus : ['']);
       setImageUrl(editingPlace.image_url);
       setOpeningHours(editingPlace.opening_hours || '11:00 AM - 10:00 PM');
-      setHotelDistance(editingPlace.hotel_distance || '5 min walk');
+      setClosedDays(editingPlace.closed_days || []);
       setIsFeatured(editingPlace.is_featured ?? true);
       setRating(editingPlace.rating ?? 4.5);
     } else {
@@ -61,7 +61,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
       setMenus(['Samgyeopsal (₩18,000)', 'Kimchi Stew (₩9,000)']);
       setImageUrl('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80');
       setOpeningHours('11:30 AM - 11:00 PM');
-      setHotelDistance('4 min walk');
+      setClosedDays([]);
       setIsFeatured(true);
       setRating(4.5);
     }
@@ -124,7 +124,8 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
           recommended_menus: menus.filter((m) => m.trim() !== ''),
           image_url: imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80',
           opening_hours: openingHours,
-          hotel_distance: hotelDistance,
+          closed_days: closedDays,
+          hotel_distance: '',
           is_featured: isFeatured,
           rating: rating,
         },
@@ -333,6 +334,53 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Opening Hours & Closed Days */}
+          <div className="space-y-3">
+            <div>
+              <label className="font-semibold text-slate-300 block mb-1">Opening Hours</label>
+              <input
+                type="text"
+                value={openingHours}
+                onChange={(e) => setOpeningHours(e.target.value)}
+                placeholder="e.g. 11:30 AM - 11:00 PM"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white focus:border-amber-400 focus:outline-none"
+              />
+              <p className="text-[10px] text-slate-500 mt-1">예: 11:00 AM - 10:00 PM, 24 Hours, Last Order 9:30 PM</p>
+            </div>
+
+            <div>
+              <label className="font-semibold text-slate-300 block mb-2">Closed Days</label>
+              <div className="flex flex-wrap gap-2">
+                {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => {
+                  const isChecked = closedDays.includes(day);
+                  return (
+                    <button
+                      key={day}
+                      type="button"
+                      onClick={() =>
+                        setClosedDays((prev) =>
+                          isChecked ? prev.filter((d) => d !== day) : [...prev, day]
+                        )
+                      }
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                        isChecked
+                          ? 'bg-rose-500/20 border-rose-500 text-rose-300'
+                          : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500'
+                      }`}
+                    >
+                      {isChecked ? '✕ ' : ''}{day}
+                    </button>
+                  );
+                })}
+              </div>
+              {closedDays.length > 0 && (
+                <p className="text-[10px] text-rose-400 mt-1.5">
+                  Closed: {closedDays.join(', ')}
+                </p>
+              )}
             </div>
           </div>
 

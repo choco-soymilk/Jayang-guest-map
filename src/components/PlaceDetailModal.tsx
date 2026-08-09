@@ -106,14 +106,23 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
           </div>
 
           {/* Key Quick Info Cards */}
-          <div className="text-xs">
+          <div className="text-xs space-y-2">
             <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5">
               <Clock className="w-4 h-4 text-sky-400 shrink-0" />
-              <div>
+              <div className="flex-1 min-w-0">
                 <span className="text-slate-400 block text-[10px]">{t.opening_hours}</span>
                 <span className="font-semibold text-slate-200">{place.opening_hours || '11:00 AM - 10:00 PM'}</span>
               </div>
             </div>
+            {place.closed_days && place.closed_days.length > 0 && (
+              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2.5">
+                <span className="text-rose-400 text-base shrink-0">🚫</span>
+                <div>
+                  <span className="text-slate-400 block text-[10px]">Closed Days</span>
+                  <span className="font-semibold text-rose-300">{place.closed_days.join(', ')}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Must-Try Menus & Price */}
