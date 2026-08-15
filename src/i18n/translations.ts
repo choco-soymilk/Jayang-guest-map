@@ -9,6 +9,7 @@ export interface Translations {
   cafe: string;
   pub: string;
   attraction: string;
+  transit: string;
   get_directions: string;
   recommended_menus: string;
   opening_hours: string;
@@ -38,6 +39,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     cafe: 'Cafe ☕',
     pub: 'Pub & Bar 🍺',
     attraction: 'Attractions 🏛️',
+    transit: 'Transit & Stores 🚉',
     get_directions: 'Get Directions (Google Maps)',
     recommended_menus: 'Must-Try Menus',
     opening_hours: 'Opening Hours',
@@ -65,6 +67,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     cafe: '카페 ☕',
     pub: '술집/바 🍺',
     attraction: '관광/명소 🏛️',
+    transit: '교통/편의 🚉',
     get_directions: '구글 지도 길찾기',
     recommended_menus: '대표 추천 메뉴',
     opening_hours: '영업시간',
@@ -92,6 +95,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     cafe: 'カフェ ☕',
     pub: '居酒屋・バー 🍺',
     attraction: '観光・名所 🏛️',
+    transit: '交通・コンビニ 🚉',
     get_directions: 'Googleマップで経路案内',
     recommended_menus: 'おすすめメニュー',
     opening_hours: '営業時間',
@@ -119,6 +123,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     cafe: '咖啡 ☕',
     pub: '酒吧 🍺',
     attraction: '景点 🏛️',
+    transit: '交通/便利店 🚉',
     get_directions: '谷歌地图导航',
     recommended_menus: '招牌推荐菜品',
     opening_hours: '营业时间',

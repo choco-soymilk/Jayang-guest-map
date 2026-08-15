@@ -23,6 +23,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     { id: 'Cafe', label: t.cafe, icon: '☕', bg: 'from-amber-600 to-yellow-600' },
     { id: 'Pub', label: t.pub, icon: '🍺', bg: 'from-purple-600 to-indigo-600' },
     { id: 'Attraction', label: t.attraction, icon: '🏛️', bg: 'from-emerald-500 to-teal-600' },
+    { id: 'Transit', label: t.transit, icon: '🚉', bg: 'from-sky-500 to-blue-600' },
   ];
 
   return (

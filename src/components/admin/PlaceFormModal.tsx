@@ -18,7 +18,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
 }) => {
   const [nameEn, setNameEn] = useState<string>('');
   const [nameKr, setNameKr] = useState<string>('');
-  const [category, setCategory] = useState<'Food' | 'Cafe' | 'Pub' | 'Attraction'>('Food');
+  const [category, setCategory] = useState<'Food' | 'Cafe' | 'Pub' | 'Attraction' | 'Transit'>('Food');
   const [descriptionEn, setDescriptionEn] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [lat, setLat] = useState<number>(37.5635);
@@ -201,6 +201,7 @@ export const PlaceFormModal: React.FC<PlaceFormModalProps> = ({
                 <option value="Cafe">Cafe ☕</option>
                 <option value="Pub">Pub / Bar 🍺</option>
                 <option value="Attraction">Attraction 🏛️</option>
+                <option value="Transit">Transit &amp; Stores 🚉</option>
               </select>
             </div>
             <div className="space-y-2">

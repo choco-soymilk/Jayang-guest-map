@@ -1,4 +1,4 @@
-export type Category = 'All' | 'Food' | 'Cafe' | 'Pub' | 'Attraction';
+export type Category = 'All' | 'Food' | 'Cafe' | 'Pub' | 'Attraction' | 'Transit';
 
 export type Language = 'en' | 'kr' | 'jp' | 'cn';
 
@@ -6,7 +6,7 @@ export interface Place {
   id: string;
   name_en: string;
   name_kr: string;
-  category: 'Food' | 'Cafe' | 'Pub' | 'Attraction';
+  category: 'Food' | 'Cafe' | 'Pub' | 'Attraction' | 'Transit';
   description_en: string;
   address: string;
   lat: number;
