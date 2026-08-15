@@ -60,7 +60,7 @@ export const MapView: React.FC<MapViewProps> = ({
       try {
         const mapOptions: naver.maps.MapOptions = {
           center: new window.naver.maps.LatLng(HOTEL_LOCATION.lat, HOTEL_LOCATION.lng),
-          zoom: 15,
+          zoom: 16,
           zoomControl: false,
           mapTypeControl: false,
           scaleControl: false,
@@ -70,6 +70,22 @@ export const MapView: React.FC<MapViewProps> = ({
         const map = new window.naver.maps.Map(mapContainerRef.current!, mapOptions);
         naverMapInstanceRef.current = map;
         setMapLoaded(true);
+
+        // 초기 로딩 시 하단창(~50vh)이 확장되어 있으므로,
+        // 호텔 핀이 보이는 영역(상단 50%) 중앙에 위치하도록 중심을 아래로 이동
+        setTimeout(() => {
+          if (!mapContainerRef.current || !naverMapInstanceRef.current) return;
+          const projection = map.getProjection();
+          const hotelLatLng = new window.naver.maps.LatLng(HOTEL_LOCATION.lat, HOTEL_LOCATION.lng);
+          const hotelOffset = projection.fromCoordToOffset(hotelLatLng);
+          const sheetHeightPx = mapContainerRef.current.clientHeight * 0.5;
+          const adjustedOffset = new window.naver.maps.Point(
+            hotelOffset.x,
+            hotelOffset.y + sheetHeightPx / 2
+          );
+          const adjustedLatLng = projection.fromOffsetToCoord(adjustedOffset);
+          map.setCenter(adjustedLatLng);
+        }, 0);
 
         window.naver.maps.Event.addListener(map, 'click', (e: any) => {
           if (e.coord && onMapClickForCoords) {
