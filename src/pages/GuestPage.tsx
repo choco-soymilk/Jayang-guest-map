@@ -63,6 +63,7 @@ export const GuestPage: React.FC<GuestPageProps> = ({ onOpenAdminPage }) => {
       Cafe: 0,
       Pub: 0,
       Attraction: 0,
+      Transit: 0,
     };
     places.forEach((p) => {
       if (counts[p.category] !== undefined) {
