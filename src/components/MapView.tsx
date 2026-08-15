@@ -10,6 +10,7 @@ interface MapViewProps {
   searchQuery: string;
   selectedPlace: Place | null;
   onSelectPlace: (place: Place | null) => void;
+  onOpenDetail?: (place: Place) => void;
   onMapClickForCoords?: (coords: { lat: number; lng: number; address?: string }) => void;
   isBottomSheetExpanded?: boolean;
   /** Increment this counter each time a place is selected (even re-selecting the same one) */
@@ -30,6 +31,7 @@ export const MapView: React.FC<MapViewProps> = ({
   searchQuery,
   selectedPlace,
   onSelectPlace,
+  onOpenDetail,
   onMapClickForCoords,
   isBottomSheetExpanded = false,
   panTrigger = 0,
@@ -143,7 +145,10 @@ export const MapView: React.FC<MapViewProps> = ({
           },
         });
 
-        window.naver.maps.Event.addListener(marker, 'click', () => onSelectPlace(place));
+        window.naver.maps.Event.addListener(marker, 'click', () => {
+          onSelectPlace(place);
+          if (onOpenDetail) onOpenDetail(place);
+        });
         markersMapRef.current.set(place.id, marker);
       }
     });
@@ -174,24 +179,29 @@ export const MapView: React.FC<MapViewProps> = ({
     const targetLatLng = new window.naver.maps.LatLng(selectedPlace.lat, selectedPlace.lng);
 
     if (isBottomSheetExpanded) {
-      // Shift the target point upward in screen space so the marker stays
-      // visible above the expanded bottom sheet (approx 50vh tall).
+      // 하단창이 열려있을 때: 지도의 보이는 영역(상단 50~55%) 중앙으로 핀을 이동시킨다.
+      // panTo는 현재 뷰포트 기준으로 오프셋을 계산하므로,
+      // 먼저 목적지를 현재 뷰포트 좌표계에서 오프셋으로 변환한 뒤
+      // 하단창 높이의 절반만큼 y를 더해(위로 올려) 조정된 좌표를 구한다.
       const projection = map.getProjection();
-      const targetPoint = projection.fromCoordToOffset(targetLatLng);
-      const sheetHeight = mapContainerRef.current
-        ? mapContainerRef.current.clientHeight * 0.25 // shift up by ~25% of map height
-        : 100;
-      const adjustedPoint = new window.naver.maps.Point(
-        targetPoint.x,
-        targetPoint.y + sheetHeight
+      // 현재 뷰포트 중심을 기준으로 한 픽셀 오프셋 구하기
+      const targetOffset = projection.fromCoordToOffset(targetLatLng);
+      const sheetHeightPx = mapContainerRef.current
+        ? mapContainerRef.current.clientHeight * 0.5 // 하단창이 약 50vh
+        : 150;
+      // y를 +sheetHeightPx/2 하면 지도가 위로 올라가서 핀이 보이는 영역 중앙에 위치
+      const adjustedOffset = new window.naver.maps.Point(
+        targetOffset.x,
+        targetOffset.y + sheetHeightPx / 2
       );
-      const adjustedLatLng = projection.fromOffsetToCoord(adjustedPoint);
+      const adjustedLatLng = projection.fromOffsetToCoord(adjustedOffset);
+      map.setZoom(16, false);
       map.panTo(adjustedLatLng, { duration: 300 });
     } else {
+      map.setZoom(16, false);
       map.panTo(targetLatLng, { duration: 300 });
     }
 
-    map.setZoom(16, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [panTrigger, selectedPlace]);
 
@@ -281,7 +291,7 @@ export const MapView: React.FC<MapViewProps> = ({
                   key={place.id}
                   className={`absolute left-1/2 top-1/2 z-10 transition-all duration-200 cursor-pointer ${isSelected ? 'scale-125 z-30' : 'hover:scale-110'}`}
                   style={{ transform: `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))` }}
-                  onClick={() => onSelectPlace(place)}
+                  onClick={() => { onSelectPlace(place); if (onOpenDetail) onOpenDetail(place); }}
                 >
                   <div className="flex flex-col items-center">
                     <div className="px-2.5 py-1 rounded-full shadow-lg border border-white/80 flex items-center gap-1 text-xs font-bold text-white" style={{ backgroundColor: style.bg }}>

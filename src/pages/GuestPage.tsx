@@ -100,6 +100,7 @@ export const GuestPage: React.FC<GuestPageProps> = ({ onOpenAdminPage }) => {
           searchQuery={searchQuery}
           selectedPlace={selectedPlace}
           onSelectPlace={handleSelectPlace}
+          onOpenDetail={(place) => setDetailModalPlace(place)}
           isBottomSheetExpanded={isBottomSheetExpanded}
           panTrigger={panTrigger}
         />
