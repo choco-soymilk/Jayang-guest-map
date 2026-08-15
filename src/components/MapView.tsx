@@ -22,6 +22,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; icon: string }> = {
   Cafe: { bg: '#d97706', icon: '☕' },
   Pub: { bg: '#8b5cf6', icon: '🍺' },
   Attraction: { bg: '#10b981', icon: '🏛️' },
+  Transit: { bg: '#0ea5e9', icon: '🚉' },
   Hotel: { bg: '#3b82f6', icon: '🏨' },
 };
 
