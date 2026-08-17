@@ -30,6 +30,8 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
 
   const t = TRANSLATIONS[currentLang];
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
+  const naverMapsUrl = `https://map.naver.com/v5/directions/-/-/-/walk?c=${place.lng},${place.lat},15,0,0,0,dh&destination=${place.lat},${place.lng}&destinationName=${encodeURIComponent(place.name_kr)}`;
+  const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(`${place.name_kr} (${place.address})`);
@@ -166,17 +168,34 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Footer Actions — Google Maps */}
-        <div className="p-4 glass-panel border-t border-slate-800 shrink-0">
+        {/* Footer Actions — Navigation Buttons */}
+        <div className="p-4 glass-panel border-t border-slate-800 shrink-0 flex flex-col gap-2.5">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleRouteClick}
-            className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+            className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             <Navigation className="w-4 h-4 fill-white" />
             <span>Google Maps Directions</span>
+            <ExternalLink className="w-3.5 h-3.5 opacity-75" />
+          </a>
+          <a
+            href={naverMapsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              handleRouteClick();
+              // Fallback to web URL if app not installed
+              setTimeout(() => {
+                window.open(naverMapsUrl, '_blank');
+              }, 1500);
+            }}
+            className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+          >
+            <Navigation className="w-4 h-4 fill-white" />
+            <span>네이버맵 도보 길안내</span>
             <ExternalLink className="w-3.5 h-3.5 opacity-75" />
           </a>
         </div>

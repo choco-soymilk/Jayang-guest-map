@@ -79,6 +79,8 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
           {places.map((place) => {
             const isSelected = selectedPlace?.id === place.id;
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
+            const naverMapsUrl = `https://map.naver.com/v5/directions/-/-/-/walk?c=${place.lng},${place.lat},15,0,0,0,dh&destination=${place.lat},${place.lng}&destinationName=${encodeURIComponent(place.name_kr)}`;
+            const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
 
             return (
               <div
@@ -137,13 +139,13 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
                 </div>
 
                 {/* Actions (View Details & Get Directions Deep Link) */}
-                <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80">
+                <div className="flex items-center gap-1.5 pt-2 border-t border-slate-800/80">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenDetail(place);
                     }}
-                    className="flex-1 py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors text-center"
+                    className="flex-1 py-1.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition-colors text-center"
                   >
                     Details
                   </button>
@@ -153,10 +155,28 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1 shadow-md shadow-blue-500/20 active:scale-95"
+                    className="flex-1 py-1.5 px-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white text-[10px] font-bold transition-all flex items-center justify-center gap-0.5 shadow-md shadow-blue-500/20 active:scale-95"
+                    title="Google Maps Directions"
                   >
-                    <Navigation className="w-3.5 h-3.5 fill-white" />
-                    <span>Google Maps</span>
+                    <Navigation className="w-3 h-3 fill-white shrink-0" />
+                    <span>Google</span>
+                  </a>
+
+                  <a
+                    href={naverMapsAppUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setTimeout(() => {
+                        window.open(naverMapsUrl, '_blank');
+                      }, 1500);
+                    }}
+                    className="flex-1 py-1.5 px-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-[10px] font-bold transition-all flex items-center justify-center gap-0.5 shadow-md shadow-emerald-500/20 active:scale-95"
+                    title="네이버맵 도보 길안내"
+                  >
+                    <Navigation className="w-3 h-3 fill-white shrink-0" />
+                    <span>네이버</span>
                   </a>
                 </div>
               </div>
