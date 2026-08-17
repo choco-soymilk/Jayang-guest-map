@@ -29,6 +29,7 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
   if (!place) return null;
 
   const t = TRANSLATIONS[currentLang];
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
   const naverMapsUrl = `https://map.naver.com/v5/directions/-/-/-/walk?c=${place.lng},${place.lat},15,0,0,0,dh&destination=${place.lat},${place.lng}&destinationName=${encodeURIComponent(place.name_kr)}`;
   const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
@@ -45,6 +46,20 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
       spread: 60,
       origin: { y: 0.8 }
     });
+  };
+
+  const handleNaverClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    handleRouteClick();
+    if (!isMobile) {
+      // PC: 바로 웹 URL로 이동
+      e.preventDefault();
+      window.open(naverMapsUrl, '_blank');
+    } else {
+      // 모바일: 앱 딥링크 시도 후 웹 fallback
+      setTimeout(() => {
+        window.open(naverMapsUrl, '_blank');
+      }, 1500);
+    }
   };
 
   return (
@@ -182,16 +197,10 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
             <ExternalLink className="w-3.5 h-3.5 opacity-75" />
           </a>
           <a
-            href={naverMapsAppUrl}
+            href={isMobile ? naverMapsAppUrl : naverMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => {
-              handleRouteClick();
-              // Fallback to web URL if app not installed
-              setTimeout(() => {
-                window.open(naverMapsUrl, '_blank');
-              }, 1500);
-            }}
+            onClick={handleNaverClick}
             className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             <Navigation className="w-4 h-4 fill-white" />

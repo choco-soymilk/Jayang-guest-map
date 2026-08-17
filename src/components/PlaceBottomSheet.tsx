@@ -78,6 +78,7 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
         <div className="p-4 overflow-y-auto max-h-[calc(50vh-50px)] sm:max-h-[calc(45vh-50px)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
           {places.map((place) => {
             const isSelected = selectedPlace?.id === place.id;
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
             const naverMapsUrl = `https://map.naver.com/v5/directions/-/-/-/walk?c=${place.lng},${place.lat},15,0,0,0,dh&destination=${place.lat},${place.lng}&destinationName=${encodeURIComponent(place.name_kr)}`;
             const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
@@ -163,14 +164,21 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
                   </a>
 
                   <a
-                    href={naverMapsAppUrl}
+                    href={isMobile ? naverMapsAppUrl : naverMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setTimeout(() => {
+                      if (!isMobile) {
+                        // PC: 바로 웹 URL로 이동
+                        e.preventDefault();
                         window.open(naverMapsUrl, '_blank');
-                      }, 1500);
+                      } else {
+                        // 모바일: 앱 딥링크 시도 후 웹 fallback
+                        setTimeout(() => {
+                          window.open(naverMapsUrl, '_blank');
+                        }, 1500);
+                      }
                     }}
                     className="flex-1 py-1.5 px-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-[10px] font-bold transition-all flex items-center justify-center gap-0.5 shadow-md shadow-emerald-500/20 active:scale-95"
                     title="NAVER Maps Walking"
