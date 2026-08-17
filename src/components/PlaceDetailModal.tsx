@@ -185,7 +185,7 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
             href={naverMapsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => {
+            onClick={() => {
               handleRouteClick();
               // Fallback to web URL if app not installed
               setTimeout(() => {
