@@ -31,8 +31,8 @@ export interface Translations {
 
 export const TRANSLATIONS: Record<Language, Translations> = {
   en: {
-    app_title: 'Guest Map',
-    app_subtitle: 'Curated Gourmet & Hotspots for Hotel Guests',
+    app_title: 'Jayang Log',
+    app_subtitle: "Host's Neighborhood Restaurant Picks",
     search_placeholder: 'Search places, BBQ, cafe, sushi...',
     all_categories: 'All Spots',
     food: 'Food 🍖',
@@ -59,8 +59,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     delete_confirm: 'Are you sure you want to delete this place?'
   },
   kr: {
-    app_title: '게스트 맵',
-    app_subtitle: '호텔 투숙객 전용 엄선 맛집 & 핫플 가이드',
+    app_title: '자양 로그',
+    app_subtitle: '호스트가 말아주는 동네 맛집',
     search_placeholder: '맛집, 삼겹살, 카페, 술집, 명소 검색...',
     all_categories: '전체 보기',
     food: '맛집 🍖',
@@ -87,8 +87,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     delete_confirm: '이 장소를 정말 삭제하시겠습니까?'
   },
   jp: {
-    app_title: 'ゲストマップ',
-    app_subtitle: 'ホテル宿泊者専用 グルメ＆スポットガイド',
+    app_title: 'ジャヤン ログ',
+    app_subtitle: 'ホストが教える地元のおすすめグルメ',
     search_placeholder: 'お店、焼肉、カフェ、居酒屋を検索...',
     all_categories: 'すべて',
     food: 'グルメ 🍖',
@@ -115,8 +115,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     delete_confirm: 'このスポットを削除しますか？'
   },
   cn: {
-    app_title: '宾客地图',
-    app_subtitle: '酒店住客专属 美食与景点推荐指南',
+    app_title: '资阳日志',
+    app_subtitle: '房东推荐的周边美食',
     search_placeholder: '搜索美食、烤肉、咖啡厅、酒吧...',
     all_categories: '全部',
     food: '美食 🍖',
