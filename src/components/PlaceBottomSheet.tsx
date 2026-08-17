@@ -173,10 +173,10 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
                       }, 1500);
                     }}
                     className="flex-1 py-1.5 px-2 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-[10px] font-bold transition-all flex items-center justify-center gap-0.5 shadow-md shadow-emerald-500/20 active:scale-95"
-                    title="네이버맵 도보 길안내"
+                    title="NAVER Maps Walking"
                   >
                     <Navigation className="w-3 h-3 fill-white shrink-0" />
-                    <span>네이버</span>
+                    <span>NAVER</span>
                   </a>
                 </div>
               </div>

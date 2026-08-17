@@ -195,7 +195,7 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
             className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
           >
             <Navigation className="w-4 h-4 fill-white" />
-            <span>네이버맵 도보 길안내</span>
+            <span>NAVER Maps Walking</span>
             <ExternalLink className="w-3.5 h-3.5 opacity-75" />
           </a>
         </div>
