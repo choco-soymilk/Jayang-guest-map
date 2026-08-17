@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { Place, Language } from '../types/place';
 import { TRANSLATIONS } from '../i18n/translations';
 import { ChevronUp, ChevronDown, Navigation } from 'lucide-react';
+import { HOTEL_LOCATION } from '../data/initialPlaces';
 
 interface PlaceBottomSheetProps {
   places: Place[];
@@ -80,7 +81,7 @@ export const PlaceBottomSheet: React.FC<PlaceBottomSheetProps> = ({
             const isSelected = selectedPlace?.id === place.id;
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
             const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
-            const naverMapsUrl = `https://map.naver.com/p/directions/-/-/-/${place.lng},${place.lat},${encodeURIComponent(place.name_kr)}/walk`;
+            const naverMapsUrl = `https://map.naver.com/index.nhn?slng=${HOTEL_LOCATION.lng}&slat=${HOTEL_LOCATION.lat}&stext=${encodeURIComponent(HOTEL_LOCATION.name)}&elng=${place.lng}&elat=${place.lat}&etext=${encodeURIComponent(place.name_kr)}&menu=route&pathType=1`;
             const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
 
             return (
