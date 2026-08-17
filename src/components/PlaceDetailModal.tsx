@@ -31,7 +31,7 @@ export const PlaceDetailModal: React.FC<PlaceDetailModalProps> = ({
   const t = TRANSLATIONS[currentLang];
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}&destination_place_id=${encodeURIComponent(place.name_en)}&travelmode=walking`;
-  const naverMapsUrl = `https://map.naver.com/v5/directions/-/-/-/walk?c=${place.lng},${place.lat},15,0,0,0,dh&destination=${place.lat},${place.lng}&destinationName=${encodeURIComponent(place.name_kr)}`;
+  const naverMapsUrl = `https://map.naver.com/p/directions/-/-/-/${place.lng},${place.lat},${encodeURIComponent(place.name_kr)}/walk`;
   const naverMapsAppUrl = `nmap://route/walk?dlat=${place.lat}&dlng=${place.lng}&dname=${encodeURIComponent(place.name_kr)}&appname=com.jayangjayang.guestmap`;
 
   const handleCopyAddress = () => {
